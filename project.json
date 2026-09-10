@@ -1,0 +1,25 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "[h1]▲ FOR THE FULL EXPERIENCE (KEYBOARD CONTROLS) ▲[/h1]\nDue to security restrictions, keyboard input is blocked natively for web wallpapers. To enable full keyboard shortcuts (like rotating items with your keyboard):\n[list=1]\n[*]Open Wallpaper Engine, click [b]\"Open Wallpaper\"[/b] at the bottom left, and choose [b]\"Open from URL\"[/b].\n[*]Paste this link into the field and click OK: [url=https://sem-py.github.io/re4-inventory/]https://sem-py.github.io/re4-inventory/[/url]\n[*]On your desktop, press [b]ALT + K[/b] (or your assigned hotkey) to hide desktop icons and enable keyboard input.\n[/list]\n\n[hr][/hr]\n\n[img]https://i.imgur.com/ZJWeUi0.gif[/img]\n\n[i]An interactive, fully physicalized inventory management wallpaper based on the classic Resident Evil 4 attache case. Perfect for organizing your digital space or just scratching that inventory-sorting itch right on your desktop.[/i]\n\n[h2]▲ FEATURES ▲[/h2]\n[list]\n[*][b]Fully Interactive Grid:[/b] Drag, drop, and organize classic RE4 items including weapons, ammo, herbs, and first aid sprays.\n[*][b]Tactile Audio:[/b] Sound effects taken directly from the original game when moving and rotating items.\n[*][b]Atmospheric Background Music:[/b] Moody, immersive ambient track that can be toggled on or off.\n[*][b]Minimalist Design:[/b] Clean, dark aesthetic optimized for desktop use without causing visual clutter.\n[/list]\n\n[h2]▲ CONTROLS ▲[/h2]\n[list]\n[*][b]Left Click:[/b] Pick up / Place item. (Spacebar works in URL version).\n[*][b]Rotate Held Item:[/b] Click the rotate button on the top-left of the grid (Or [b]R[/b] and [b]scroll wheel[/b] if you are using the URL version).\n[*][b]Arrow Keys:[/b] Move held item. (URL version only!).\n[*][b]ESC:[/b] Undo previous action. (URL version only!).\n[/list]\n\n[h2]▲ CREDITS ▲[/h2]\n[list]\n[*]Designed by [b]orbyt[/b].\n[*]Original assets and audio properties belong to [b]Capcom[/b].\n[/list]\n\n[hr][/hr]\nIf you enjoy this project, please take a second to [b]Rate[/b] and [b]Favorite[/b]! Feedback and bug reports are always welcome in the comment section below.\n\n[b]Disclaimer:[/b] [i]This is an unofficial, non-profit fan-made project created strictly for entertainment purposes. This project is not affiliated with, authorized, or endorsed by Capcom. All Resident Evil assets and imagery are property of Capcom.[/i]",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			}
+		}
+	},
+	"preview" : "preview.gif",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Game" ],
+	"title" : "Resident Evil 4 - Interactive Attache Case Inventory",
+	"type" : "web",
+	"version" : 0
+}

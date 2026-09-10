@@ -452,6 +452,31 @@ text-align:center!important;
 min-width:42px;
 }
 
+/* Click-to-open attache case */
+#view-stage { position:relative; isolation:isolate; transition:translate .8s ease; }
+#view-stage.case-open { translate:0 65px; }
+#inventory-grid { border:4px solid #797870; outline:6px ridge #797870; border-radius:9px; box-shadow:0 12px 0 #242521,0 15px 0 #77766d,0 35px 65px #000; }
+#case-lid {
+ position:absolute; inset:0; width:100%; height:100%; z-index:170; padding:0;
+ cursor:pointer; color:#b7b5a6; border:10px ridge #858479; border-radius:9px;
+ background:repeating-linear-gradient(0deg,#ffffff03 0 1px,transparent 1px 4px),linear-gradient(125deg,#45463f,#20221f 45%,#393b34);
+ box-shadow:inset 0 0 0 5px #141612,inset 0 0 0 8px #56574e,inset 0 0 50px #0009,0 14px 0 #20221e,0 17px 0 #64655b,0 35px 65px #000;
+ transform:rotateX(20deg); transform-origin:center center;
+ transition:height .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1),background .6s;
+}
+#case-lid:focus-visible { outline:3px solid #d6c783; outline-offset:8px; }
+#case-lid::before { content:""; position:absolute; left:39%; top:-43px; width:22%; height:31px; border:9px ridge #86877e; border-bottom:0; border-radius:15px 15px 0 0; background:#181a17; box-shadow:0 -3px 8px #000; }
+.case-latch { position:absolute; bottom:-18px; width:40px; height:44px; border:2px solid #a09d8b; border-radius:4px; background:linear-gradient(90deg,#343630,#a3a493 45%,#4b4e42); box-shadow:0 3px 5px #000; transition:transform .4s; }
+.case-latch::after { content:""; position:absolute; inset:18px 16px 8px; background:#181a16; }
+.case-latch.left { left:14%; } .case-latch.right { right:14%; }
+.case-badge { display:inline-block; border:1px solid #727366; padding:14px 27px; letter-spacing:7px; font:22px Georgia,serif; text-shadow:0 2px 2px #000; box-shadow:0 1px 5px #0008; }
+.case-badge small { display:block; margin-top:9px; font:10px sans-serif; letter-spacing:5px; color:#929486; }
+.case-open #case-lid { transform-origin:center top; height:140px; transform:translateY(-133px) rotateX(-12deg); background:repeating-linear-gradient(45deg,#252721 0 9px,#30322b 9px 10px,#1c1e19 10px 19px); box-shadow:inset 0 0 0 6px #141612,inset 0 0 30px #000,0 -5px 0 #53564a; }
+.case-open .case-badge { opacity:0; }
+.case-open .case-latch { transform:translateY(8px) rotateX(50deg); }
+#case-hint { position:absolute; top:calc(100% + 65px); left:0; width:100%; margin:0; text-align:center; color:#b4b2a2; letter-spacing:3px; text-transform:uppercase; font-size:12px; pointer-events:none; }
+#wallpaper-root:not(.inventory-open) #control-panel { visibility:hidden; }
+@media (prefers-reduced-motion:reduce) { #view-stage,#case-lid,.case-latch { transition:none; } }
 </style>
 </head>
 <body>
@@ -531,7 +556,12 @@ min-width:42px;
     </div>
 
     <div id="view-stage">
-        <div id="inventory-grid">
+        <button id="case-lid" type="button" aria-label="Abrir maleta" aria-expanded="false" aria-controls="inventory-grid" onclick="toggleAttacheCase()">
+            <span class="case-badge">RESIDENT EVIL 4<small>ATTACHÉ CASE</small></span>
+            <span class="case-latch left" aria-hidden="true"></span><span class="case-latch right" aria-hidden="true"></span>
+        </button>
+        <p id="case-hint" aria-live="polite">Clique na maleta para abrir</p>
+        <div id="inventory-grid" inert aria-hidden="true">
             <div id="highlighter-overlay"></div>
             <button id="edge-rotate-btn" onclick="rotateHeldItem()" onmouseenter="playSFX(sfxMoveHeld)">⟳</button>
         </div>
@@ -563,6 +593,23 @@ min-width:42px;
   </div>
 
     <script>
+        let attacheCaseOpen = false;
+        function toggleAttacheCase() {
+            if (attacheCaseOpen && heldItem) cancelHeldItem();
+            attacheCaseOpen = !attacheCaseOpen;
+            document.getElementById('view-stage').classList.toggle('case-open', attacheCaseOpen);
+            document.getElementById('wallpaper-root').classList.toggle('inventory-open', attacheCaseOpen);
+            const lid = document.getElementById('case-lid');
+            lid.setAttribute('aria-expanded', String(attacheCaseOpen));
+            lid.setAttribute('aria-label', attacheCaseOpen ? 'Fechar maleta' : 'Abrir maleta');
+            const grid = document.getElementById('inventory-grid');
+            grid.inert = !attacheCaseOpen;
+            grid.setAttribute('aria-hidden', String(!attacheCaseOpen));
+            document.getElementById('case-hint').textContent = attacheCaseOpen ? 'Clique na tampa para fechar' : 'Clique na maleta para abrir';
+            document.getElementById('settings-panel').style.display = 'none';
+            playSFX(attacheCaseOpen ? sfxStart : sfxPlace);
+        }
+
         const sfxStart    = new Audio('audio/sfx_start.wav');
         const sfxMove     = new Audio('audio/sfx_move.wav');
         const sfxMoveHeld = new Audio('audio/sfx_move_held.wav');
@@ -1464,6 +1511,7 @@ function syncCustomCaseLabels() {
         }
 
         window.addEventListener('keydown', (e) => {
+            if (!attacheCaseOpen || e.target.closest('button, input')) return;
             if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
             switch(e.key.toLowerCase()) {
                 case 'arrowup':    case 'w': e.preventDefault(); moveSelection(0, -1);  break;

@@ -6,15 +6,26 @@
     <title>RE4 Inventory</title>
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <style>
-        body {
+        html, body {
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            background-color: #121212; 
+            background-color: #121212;
+            width: 100%;
+            height: 100%;
+        }
+
+        #wallpaper-root {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1920px;
+            height: 1080px;
+            transform-origin: top left;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             color: white;
             font-family: sans-serif;
         }
@@ -260,15 +271,15 @@
 
         #info-overlay {
             display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6);
             z-index: 299;
         }
 
         #info-modal {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -445,6 +456,8 @@ min-width:42px;
 </head>
 <body>
 
+  <div id="wallpaper-root">
+
     <div id="control-panel">
         <button class="btn icon-btn" id="reshuffle-btn" onmouseenter="playSFX(sfxMoveHeld)" onmouseleave="this.blur()" onclick="triggerResetLayout()" data-tooltip="Reshuffle (3 left)" style="padding:8px 12px; font-size:15px;">↺</button>
         <button class="btn icon-btn" onmouseenter="playSFX(sfxMoveHeld)" onclick="playSFX(sfxPick); triggerRandomSpawn();" data-tooltip="Randomize" style="padding:8px 12px; font-size:15px;">🎲</button>
@@ -546,6 +559,8 @@ min-width:42px;
     </div>
 
     <audio id="bg-music" src="serenity.mp3" loop></audio>
+
+  </div>
 
     <script>
         const sfxStart    = new Audio('audio/sfx_start.wav');
@@ -1481,6 +1496,16 @@ function syncCustomCaseLabels() {
 
         drawInventoryFootprints();
         updateHighlight(0, 0);
+
+        const wallpaperRoot = document.getElementById('wallpaper-root');
+        function scaleWallpaper() {
+            const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const offsetX = (window.innerWidth - 1920 * scale) / 2;
+            const offsetY = (window.innerHeight - 1080 * scale) / 2;
+            wallpaperRoot.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        }
+        window.addEventListener('resize', scaleWallpaper);
+        scaleWallpaper();
     </script>
 </body>
 </html>

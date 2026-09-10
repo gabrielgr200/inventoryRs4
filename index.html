@@ -477,6 +477,21 @@ min-width:42px;
 #case-hint { position:absolute; top:calc(100% + 65px); left:0; width:100%; margin:0; text-align:center; color:#b4b2a2; letter-spacing:3px; text-transform:uppercase; font-size:12px; pointer-events:none; }
 #wallpaper-root:not(.inventory-open) #control-panel { visibility:hidden; }
 @media (prefers-reduced-motion:reduce) { #view-stage,#case-lid,.case-latch { transition:none; } }
+/* Larger toolbar controls at native viewport size. */
+#control-panel .icon-btn {
+    width:44px;
+    height:44px;
+    padding:8px;
+    font-size:22px;
+    line-height:1;
+    opacity:.9;
+}
+#control-panel .icon-btn:focus-visible {
+    outline:2px solid #FFD700;
+    outline-offset:4px;
+}
+#control-panel .icon-btn::after { font-size:12px; line-height:1.4; }
+#cog-btn::after { left:auto; right:0; transform:none; }
 </style>
 </head>
 <body>
@@ -484,11 +499,11 @@ min-width:42px;
   <div id="wallpaper-root">
 
     <div id="control-panel">
-        <button class="btn icon-btn" id="reshuffle-btn" onmouseenter="playSFX(sfxMoveHeld)" onmouseleave="this.blur()" onclick="triggerResetLayout()" data-tooltip="Reshuffle (3 left)" style="padding:8px 12px; font-size:15px;">↺</button>
-        <button class="btn icon-btn" onmouseenter="playSFX(sfxMoveHeld)" onclick="playSFX(sfxPick); triggerRandomSpawn();" data-tooltip="Randomize" style="padding:8px 12px; font-size:15px;">🎲</button>
+        <button class="btn icon-btn" id="reshuffle-btn" onmouseenter="playSFX(sfxMoveHeld)" onmouseleave="this.blur()" onclick="triggerResetLayout()" data-tooltip="Reshuffle (3 left)">↺</button>
+        <button class="btn icon-btn" onmouseenter="playSFX(sfxMoveHeld)" onclick="playSFX(sfxPick); triggerRandomSpawn();" data-tooltip="Randomize">🎲</button>
         
         <div style="position:relative;">
-            <button class="btn icon-btn" id="cog-btn" onmouseenter="playSFX(sfxMoveHeld)" onclick="playSFX(sfxPick); toggleSettings();" data-tooltip="Settings" style="padding:8px 12px; font-size:15px;">⚙</button>
+            <button class="btn icon-btn" id="cog-btn" onmouseenter="playSFX(sfxMoveHeld)" onclick="playSFX(sfxPick); toggleSettings();" data-tooltip="Settings">⚙</button>
             <div id="settings-panel" style="
                 display:none;
                 position:absolute;
